@@ -1,8 +1,9 @@
 import { CircleQuestionMark } from "lucide-react";
 import iconMap from "./SignIconMap";
+import type { ASLLabel } from "@/types/prediction";
 
 interface Props {
-  char: string;
+  char: ASLLabel | "-";
   size?: number;
 }
 
@@ -12,7 +13,7 @@ export function SignIcon({
   strokeWidth = 0.5,
   ...props
 }: Props & React.SVGAttributes<SVGSVGElement>) {
-  const Icon = iconMap[char.toUpperCase()];
+  const Icon = char === "-" ? null : iconMap[char];
 
   return Icon ? (
     <Icon width={size} height={size} strokeWidth={strokeWidth} {...props} />

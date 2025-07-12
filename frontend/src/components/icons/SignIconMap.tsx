@@ -34,8 +34,9 @@ import Asl6 from "@/components/icons/Asl6";
 import Asl7 from "@/components/icons/Asl7";
 import Asl8 from "@/components/icons/Asl8";
 import Asl9 from "@/components/icons/Asl9";
+import type { ASLLabel } from "@/types/prediction";
 
-const iconMap: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
+const iconMap: Record<ASLLabel, React.FC<React.SVGProps<SVGSVGElement>>> = {
   A: AslA,
   B: AslB,
   C: AslC,
