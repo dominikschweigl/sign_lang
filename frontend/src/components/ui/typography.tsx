@@ -12,7 +12,7 @@ const textVariants = cva("text-foreground", {
       h4: "scroll-m-20 text-xl font-semibold tracking-tight",
       h5: "scroll-m-20 text-lg font-semibold tracking-tight",
       h6: "scroll-m-20 text-base font-semibold tracking-tight",
-      p: "leading-7 mt-6",
+      p: "leading-7",
       blockquote: "mt-6 border-l-2 pl-6 italic",
       ul: "my-6 ml-6 list-disc [&>li]:mt-2",
       inlineCode: "relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
@@ -26,9 +26,13 @@ const textVariants = cva("text-foreground", {
 
 type Element = keyof React.JSX.IntrinsicElements;
 
-type TextProps<T extends Element> = { element: T } & VariantProps<typeof textVariants> & React.HTMLAttributes<HTMLElement>;
+type TextProps<T extends Element> = { element: T } & VariantProps<typeof textVariants> &
+  React.HTMLAttributes<HTMLElement>;
 
-const Text = React.forwardRef<VariantProps<typeof textVariants> & React.HTMLAttributes<HTMLElement>, TextProps<Element>>(({ className, element, as, ...props }, ref) => {
+const Text = React.forwardRef<
+  VariantProps<typeof textVariants> & React.HTMLAttributes<HTMLElement>,
+  TextProps<Element>
+>(({ className, element, as, ...props }, ref) => {
   const Component = element;
 
   const componentProps = {
