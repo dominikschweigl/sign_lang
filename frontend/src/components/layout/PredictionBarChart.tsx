@@ -38,7 +38,7 @@ export function PredictionBarChart({
             data={predictions}
             layout="vertical"
             margin={{
-              right: 50,
+              right: 56,
             }}
           >
             <CartesianGrid horizontal={false} />
