@@ -15,28 +15,35 @@ import ImagePreview from "./ImagePreview";
 interface ImageCarouselProps {
   imageSrcs: string[];
   initial: number;
+  onChange?: (index: number, imageSrc: string) => void
 }
 
-export default function ImageCarousel({ imageSrcs, initial }: ImageCarouselProps) {
+export default function ImageCarousel({ imageSrcs, initial, onChange }: ImageCarouselProps) {
   const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
+  const [current, setCurrent] = React.useState(initial);
   const [hasScrolledInitially, setHasScrolledInitially] = React.useState(false);
 
   React.useEffect(() => {
-    if (!api) {
-      return;
+    if (!api) return;
+
+    const handleSelect = () => {
+      const index = api.selectedScrollSnap();
+      setCurrent(index + 1);
+      onChange?.(index, imageSrcs[index]);
+    };
+
+    api.on("select", handleSelect);
+    return () => { 
+      api.off("select", handleSelect);
     }
-    setCurrent(api.selectedScrollSnap() + 1);
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
+  }, [api, imageSrcs, onChange]);
 
   React.useEffect(() => {
     if (api && !hasScrolledInitially) {
       api.scrollTo(initial);
       setCurrent(initial + 1);
       setHasScrolledInitially(true);
+      onChange?.(initial, imageSrcs[initial])
     }
   }, [api, hasScrolledInitially, initial]);
 

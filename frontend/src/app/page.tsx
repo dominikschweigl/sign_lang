@@ -29,18 +29,24 @@ const images = [
 
 export default function Home() {
   const [chartData, setChartData] = useState<Prediction[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string>();
+  const [initialIndex, setInitialIndex] = useState<number>(0);
+
+  useEffect(() => {
+    setInitialIndex(Math.floor(Math.random() * images.length));
+  }, []);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-20 row-start-2 items-center">
-        <ImageCarousel imageSrcs={images} initial={Math.ceil(images.length * Math.random())} />
+        <ImageCarousel imageSrcs={images} initial={initialIndex} onChange={(_,image) => setSelectedImage(image)}/>
         <div className="relative w-full items-center flex flex-col">
           <Button
             className="w-40 h-[78px] items-center justify-center z-1"
             color="black"
             onClick={async () =>
               setChartData(
-                await classify(await loadPublicImageAsFile("/dataset/AAIDTXKMQDAHVCNS_flipped_lr.jpg"))
+                await classify(await loadPublicImageAsFile(`/dataset/${selectedImage}`))
               )
             }
           >
