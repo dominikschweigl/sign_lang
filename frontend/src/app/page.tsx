@@ -70,6 +70,7 @@ export default function Home() {
                 confidence: 0,
               }
             }
+            trueLabel={chartData.length != 0 && "A" || "-" as ASLLabel}
             className="w-[600px]"
           />
           <PredictionBarChart
