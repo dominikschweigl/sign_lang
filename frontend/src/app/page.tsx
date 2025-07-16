@@ -9,7 +9,7 @@ import { Text } from "@/components/ui/typography";
 import { classify } from "@/lib/classification";
 import { loadPublicImageAsFile } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
-import { CircleQuestionMark, GitFork } from "lucide-react";
+import { CircleQuestionMark, GitFork, Loader, Loader2 } from "lucide-react";
 import type { Prediction, ASLLabel } from "@/types/prediction";
 import { useEffect, useState } from "react";
 
@@ -31,6 +31,7 @@ export default function Home() {
   const [chartData, setChartData] = useState<Prediction[]>([]);
   const [selectedImage, setSelectedImage] = useState<string>();
   const [initialIndex, setInitialIndex] = useState<number>(0);
+  const [isClassifying, setIsClassifying] = useState<boolean>(false);
 
   useEffect(() => {
     setInitialIndex(Math.floor(Math.random() * images.length));
@@ -42,15 +43,21 @@ export default function Home() {
         <ImageCarousel imageSrcs={images} initial={initialIndex} onChange={(_,image) => setSelectedImage(image)}/>
         <div className="relative w-full items-center flex flex-col">
           <Button
-            className="w-40 h-[78px] items-center justify-center z-1"
+            className="w-40 h-[78px] items-center justify-center z-1 disabled:bg-gray-400 disabled:opacity-100"
             color="black"
-            onClick={async () =>
+            disabled={isClassifying}
+            onClick={async () => {
+              setIsClassifying(true)
               setChartData(
                 await classify(await loadPublicImageAsFile(`/dataset/${selectedImage}`))
               )
-            }
+              setIsClassifying(false)
+            }}
           >
-            <GitFork className="text-white size-7" />
+            {
+              isClassifying ? <Loader2 className="animate-spin size-7" /> :
+              <GitFork className="text-white size-7" />
+            }
           </Button>
           <Separator className="absolute w-full h-px bg-gray-200 top-[50%] z-0" orientation="horizontal" />
         </div>
