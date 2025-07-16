@@ -27,9 +27,11 @@ export default function PredictionCard({
             <Text element="h4" as={"h4"}>
               Prediction
             </Text>
-            <Text element="p" as={"h4"} className="ml-auto">
-              {prediction.label}
-            </Text>
+            <div className="ml-auto w-[24px] flex justify-center">
+              <Text element="p" as={"h4"}>
+                {prediction.label}
+              </Text>
+            </div>
           </div>
           <Separator className="w-full h-px bg-gray-200 my-4" orientation="horizontal" />
           <div className="flex flex-col gap-1">
@@ -59,9 +61,12 @@ export default function PredictionCard({
             <Text element="h6" as={"h6"} className="font-medium">
               True Label
             </Text>
+            <div className="w-[24px] flex justify-center">
+
             <Text element="p" as={"p"}>
               {trueLabel}
             </Text>
+            </div>
           </div>
         </div>
       </CardContent>
