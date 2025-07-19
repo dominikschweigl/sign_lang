@@ -11,48 +11,52 @@ import { loadPublicImageAsFile } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
 import { CircleQuestionMark, GitFork, Loader, Loader2 } from "lucide-react";
 import type { Prediction, ASLLabel } from "@/types/prediction";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { ImageLabel, labeledImages, imageDirectory } from "@/data/labels"
 
-const images = [
-  "AAEQVXISIYUSPAZJ.jpg",
-  "AAEQVXISIYUSPAZJ_flipped_lr.jpg",
-  "AAFUFKAHIGCMSTLC.jpg",
-  "AAFUFKAHIGCMSTLC_flipped_lr.jpg",
-  "AAFUFKAHIGCMSTLC_rotated_90.jpg",
-  "AAGCPLLMPMRDZFPD.jpg",
-  "AAGCPLLMPMRDZFPD_flipped_lr.jpg",
-  "AAGCPLLMPMRDZFPD_rotated_270.jpg",
-  "AAGCPLLMPMRDZFPD_rotated_90.jpg",
-  "AAHUTLLLDVXFUDIO.jpg",
-  "AAIDTXKMQDAHVCNS_flipped_lr.jpg",
-];
+
 
 export default function Home() {
   const [chartData, setChartData] = useState<Prediction[]>([]);
   const [selectedImage, setSelectedImage] = useState<string>();
   const [initialIndex, setInitialIndex] = useState<number>(0);
   const [isClassifying, setIsClassifying] = useState<boolean>(false);
+  const [images, setImages] = useState<ImageLabel[]>([])
+
+  const prediction = (chartData.length != 0 && chartData.reduce((prev, cur) => (cur.confidence > prev.confidence ? cur : prev))) || 
+              {
+                label: "-",
+                confidence: 0,
+              }
+
+  const predict = useCallback(async (image: string) => {
+    setIsClassifying(true)
+    setChartData([])
+    try {
+      const classification = await classify(await loadPublicImageAsFile(`${image}`));
+      setChartData(classification)
+    } catch {
+      setChartData([])
+      setIsClassifying(false)
+    }
+    setIsClassifying(false)
+  }, [setChartData, setIsClassifying])
 
   useEffect(() => {
-    setInitialIndex(Math.floor(Math.random() * images.length));
+    const randomImages =  labeledImages.toSorted(() => Math.random() - 0.5);
+    setImages(randomImages.slice(0,50));
   }, []);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-20 row-start-2 items-center">
-        <ImageCarousel imageSrcs={images} initial={initialIndex} onChange={(_,image) => setSelectedImage(image)}/>
+        <ImageCarousel imageSrcs={images.map(i => `${imageDirectory}/${i.filename}`)} initial={0} onChange={(_,image) => {setSelectedImage(image); predict(image)}}/>
         <div className="relative w-full items-center flex flex-col">
           <Button
             className="w-40 h-[78px] items-center justify-center z-1 disabled:bg-gray-400 disabled:opacity-100"
             color="black"
             disabled={isClassifying}
-            onClick={async () => {
-              setIsClassifying(true)
-              setChartData(
-                await classify(await loadPublicImageAsFile(`/dataset/${selectedImage}`))
-              )
-              setIsClassifying(false)
-            }}
+            onClick={() => selectedImage && predict(selectedImage)}
           >
             {
               isClassifying ? <Loader2 className="animate-spin size-7" /> :
@@ -63,14 +67,8 @@ export default function Home() {
         </div>
         <div className="flex gap-4 w-full">
           <PredictionCard
-            prediction={
-              (chartData.length != 0 &&
-                chartData.reduce((prev, cur) => (cur.confidence > prev.confidence ? cur : prev))) || {
-                label: "-",
-                confidence: 0,
-              }
-            }
-            trueLabel={chartData.length != 0 && "A" || "-" as ASLLabel}
+            prediction={prediction}
+            trueLabel={selectedImage && labeledImages.find(i => selectedImage.endsWith(i.filename))?.label || "-" as ASLLabel}
             className="w-[600px]"
           />
           <PredictionBarChart
