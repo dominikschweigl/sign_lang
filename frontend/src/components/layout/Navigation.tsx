@@ -53,13 +53,13 @@ export function Menu() {
             </Link>
           </NavigationMenuLink>
           <NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
-            <Link href="./about" passHref>
-              About
+            <Link href="./report" passHref>
+              Report
             </Link>
           </NavigationMenuLink>
           <NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
             <Link href="./signs" passHref>
-              Signs
+              Sign Reference
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
