@@ -54,7 +54,7 @@ const ASLInfoPage: React.FC = () => {
 
   return (
     <TooltipProvider>
-<div className="absolute bg-linear-to-b from-transparent from-0% to-gray-50 to-25% w-full h-[calc(100%-var(--spacing)*60)] top-60 left-0">
+<div className="-z-1 absolute bg-linear-to-b from-transparent from-0% to-gray-50 to-25% w-full h-[calc(100%-var(--spacing)*60)] top-60 left-0">
 </div>
 
       <div className="container mx-auto py-10 px-4 mt-32 relative">

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Page404() {
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center h-full gap-8 md:gap-16 p-4">
+    <div className="flex flex-col lg:flex-row items-center justify-center h-full gap-8 md:gap-16 p-4 mt-40 mb-20">
       <Image src={"/404.png"} alt="404" width={400} height={400} className="w-[min(400px,90%)]" />
       <div className="max-w-[400px] lg:max-w-[480px] flex flex-col gap-6 mb-16">
         <Text as={"h2"} element="h2" className="font-semibold text-3xl sm:text-4xl">

@@ -48,7 +48,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <>
+    <div className="-z-1 absolute bg-linear-to-b from-transparent from-0% to-gray-50 to-20% w-full h-[calc(100%-var(--spacing)*40)] top-40 left-0"></div>
+    <div className="border-t grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-20 row-start-2 items-center">
         <ImageCarousel imageSrcs={images.map(i => `${imageDirectory}/${i.filename}`)} initial={0} onChange={(_,image) => {setSelectedImage(image); predict(image)}}/>
         <div className="relative w-full items-center flex flex-col">
@@ -78,5 +80,6 @@ export default function Home() {
         </div>
       </main>
     </div>
+            </>
   );
 }
