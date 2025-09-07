@@ -28,8 +28,8 @@ export function PredictionBarChart({
   return (
     <Card {...props}>
       <CardHeader>
-        <CardTitle>Prediction Confidence</CardTitle>
-        <CardDescription>Model confidence scores for the top ASL sign predictions</CardDescription>
+        <CardTitle className="text-[15px] md:text-base">Prediction Confidence</CardTitle>
+        <CardDescription className="text-[13px] md:text-sm">Model confidence scores for the top ASL sign predictions</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-30 w-full">

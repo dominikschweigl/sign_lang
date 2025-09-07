@@ -6,8 +6,6 @@ interface ImagePreviewProps {
 
 export default function ImagePreview({ imageSrc }: ImagePreviewProps) {
   return (
-    <div className="relative w-fit">
-      <img src={`${imageSrc}`} alt="ML Input" className="rounded-lg w-96 aspect-square" />
-    </div>
+      <img src={`${imageSrc}`} alt="ML Input" className="rounded-lg aspect-square w-48 sm:w-64 lg:w-88" />
   );
 }

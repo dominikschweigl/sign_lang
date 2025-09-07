@@ -4,12 +4,10 @@ import ImageCarousel from "@/components/layout/ImageCarousel";
 import { PredictionBarChart } from "@/components/layout/PredictionBarChart";
 import PredictionCard from "@/components/layout/PredictionCard";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Text } from "@/components/ui/typography";
 import { classify } from "@/lib/classification";
-import { loadPublicImageAsFile } from "@/lib/utils";
+import { cn, loadPublicImageAsFile } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
-import { CircleQuestionMark, GitFork, Loader, Loader2 } from "lucide-react";
+import { GitFork, Loader2 } from "lucide-react";
 import type { Prediction, ASLLabel } from "@/types/prediction";
 import { useCallback, useEffect, useState } from "react";
 import { ImageLabel, labeledImages, imageDirectory } from "@/data/labels"
@@ -19,7 +17,6 @@ import { ImageLabel, labeledImages, imageDirectory } from "@/data/labels"
 export default function Home() {
   const [chartData, setChartData] = useState<Prediction[]>([]);
   const [selectedImage, setSelectedImage] = useState<string>();
-  const [initialIndex, setInitialIndex] = useState<number>(0);
   const [isClassifying, setIsClassifying] = useState<boolean>(false);
   const [images, setImages] = useState<ImageLabel[]>([])
 
@@ -49,37 +46,92 @@ export default function Home() {
 
   return (
     <>
-    <div className="-z-1 absolute bg-linear-to-b from-transparent from-0% to-gray-50 to-20% w-full h-[calc(100%-var(--spacing)*40)] top-40 left-0"></div>
-    <div className="border-t grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-20 row-start-2 items-center">
-        <ImageCarousel imageSrcs={images.map(i => `${imageDirectory}/${i.filename}`)} initial={0} onChange={(_,image) => {setSelectedImage(image); predict(image)}}/>
-        <div className="relative w-full items-center flex flex-col">
+      <div className="-z-1 absolute bg-linear-to-b from-transparent from-0% to-gray-50 to-20% w-full h-[calc(100%-var(--spacing)*40)] top-40 left-0"></div>
+      <div className="p-8 pb-8 sm:p-20 sm:px-10 lg:px-20 pt-28 sm:pt-40 font-[family-name:var(--font-geist-sans)]">
+          <HorizontalLayout classname="hidden md:flex" images={images} isClassifying={isClassifying} selectedImage={selectedImage} prediction={prediction} chartData={chartData} predict={predict} setSelectedImage={setSelectedImage} />
+          <VerticalLayout classname="md:hidden" images={images} isClassifying={isClassifying} selectedImage={selectedImage} prediction={prediction} chartData={chartData} predict={predict} setSelectedImage={setSelectedImage}/>
+      </div>
+    </>
+  );
+}
+
+
+interface LayoutProps {
+  images: ImageLabel[],
+  isClassifying: boolean,
+  selectedImage: string | undefined,
+  prediction: Prediction,
+  chartData: Prediction[],
+  predict: (image: string) => Promise<void>,
+  setSelectedImage: (image: string) => void,
+  classname: string | undefined
+}
+
+const HorizontalLayout = ({images, isClassifying, selectedImage, prediction, chartData, predict, setSelectedImage, classname}: LayoutProps) => {
+  return <>
+    <main className={cn("flex gap-8 md:gap-12 lg:gap-20 row-start-2 items-center w-full ", classname)}>
+        <div className="flex flex-col gap-4">
+          <PredictionCard
+            prediction={prediction}
+            trueLabel={selectedImage && labeledImages.find(i => selectedImage.endsWith(i.filename))?.label || "-" as ASLLabel}
+            className="w-full md:w-[280px] lg:w-[350px] xl:w-[440px]"
+          />
+          <PredictionBarChart
+            predictions={[...chartData].sort((a, b) => b.confidence - a.confidence).slice(0, 3)}
+            className="grow gap-4 md:gap-6"
+          />
+        </div>
+
+        <div className="relative h-full items-center flex flex-col">
           <Button
-            className="w-40 h-[78px] items-center justify-center z-1 disabled:bg-gray-400 disabled:opacity-100"
+            className="w-16 h-32 items-center justify-center z-1 disabled:bg-gray-400 disabled:opacity-100"
             color="black"
             disabled={isClassifying}
             onClick={() => selectedImage && predict(selectedImage)}
           >
             {
-              isClassifying ? <Loader2 className="animate-spin size-7" /> :
-              <GitFork className="text-white size-7" />
+              isClassifying ? <Loader2 className="animate-spin size-5.5 md:size-7" /> :
+              <GitFork className="text-white size-5.5 md:size-7 rotate-90" />
+            }
+          </Button>
+          <Separator className="absolute h-[520px] w-px bg-gray-300 z-0 top-1/2 -translate-1/2" orientation="vertical" />
+        </div>
+        
+        <ImageCarousel orientation="vertical" imageSrcs={images.map(i => `${imageDirectory}/${i.filename}`)} initial={0} onChange={(_,image) => {setSelectedImage(image); predict(image)}}/>
+        
+      </main>
+  </>
+}
+
+const VerticalLayout = ({images, isClassifying, selectedImage, prediction, chartData, predict, setSelectedImage, classname}: LayoutProps) => {
+  return <>
+    <main className={cn("flex flex-col gap-12 md:gap-20 row-start-2 items-center w-full ", classname)}>
+        <ImageCarousel orientation="horizontal" imageSrcs={images.map(i => `${imageDirectory}/${i.filename}`)} initial={0} onChange={(_,image) => {setSelectedImage(image); predict(image)}}/>
+        <div className="relative w-full items-center flex flex-col">
+          <Button
+            className="w-28 md:w-40 h-14 md:h-[78px] items-center justify-center z-1 disabled:bg-gray-400 disabled:opacity-100"
+            color="black"
+            disabled={isClassifying}
+            onClick={() => selectedImage && predict(selectedImage)}
+          >
+            {
+              isClassifying ? <Loader2 className="animate-spin size-5.5 md:size-7" /> :
+              <GitFork className="text-white size-5.5 md:size-7" />
             }
           </Button>
           <Separator className="absolute w-full h-px bg-gray-200 top-[50%] z-0" orientation="horizontal" />
         </div>
-        <div className="flex gap-4 w-full">
+        <div className="flex flex-col md:flex-row gap-4 w-full">
           <PredictionCard
             prediction={prediction}
             trueLabel={selectedImage && labeledImages.find(i => selectedImage.endsWith(i.filename))?.label || "-" as ASLLabel}
-            className="w-[600px]"
+            className="w-full md:w-[280px] lg:w-[350px]"
           />
           <PredictionBarChart
             predictions={[...chartData].sort((a, b) => b.confidence - a.confidence).slice(0, 3)}
-            className="w-full"
+            className="grow gap-4 md:gap-6"
           />
         </div>
       </main>
-    </div>
-            </>
-  );
+  </>
 }

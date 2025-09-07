@@ -23,7 +23,7 @@ export default function PredictionCard({
       <CardContent className="flex flex-col justify-between" >
         <div className="flex flex-col flex-grow">
           <div className="flex gap-2 items-center">
-            <SignIcon char={prediction.label} />
+            <SignIcon char={prediction.label} className="size-7 md:size-9"/>
             <Text element="h4" as={"h4"}>
               Prediction
             </Text>
@@ -49,8 +49,8 @@ export default function PredictionCard({
               </Text>
               {
                 prediction.label === trueLabel 
-                ? <SquareCheck className="text-green-600" strokeWidth={1.5} />
-                : <SquareX className="text-red-600" strokeWidth={1.5} />
+                ? <SquareCheck className="text-green-600 size-5 md:size-6" strokeWidth={1.5} />
+                : <SquareX className="text-red-600 size-5 md:size:6" strokeWidth={1.5} />
               }
             </div>
           </div>
