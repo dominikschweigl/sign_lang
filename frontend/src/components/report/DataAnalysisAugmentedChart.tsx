@@ -71,7 +71,7 @@ export function DataAnalysisAugmentedChart() {
           This chart shows the number of samples per label after applying data augmentation, making the dataset more balanced for training.
         </CardDescription>
       </CardHeader>
-      <CardContent className="px-16">
+      <CardContent className="md:px-16">
         <ChartContainer config={augmentedConfig}>
           <BarChart
             accessibilityLayer

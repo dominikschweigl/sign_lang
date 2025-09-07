@@ -71,7 +71,7 @@ export function DataAnalysisChart() {
           This chart shows the number of samples for each label, highlighting class imbalance in the dataset before training.
         </CardDescription>
       </CardHeader>
-      <CardContent className="px-16">
+      <CardContent className="sm:px-16">
         <ChartContainer config={distributionConfig}>
           <BarChart
             accessibilityLayer

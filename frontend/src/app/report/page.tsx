@@ -23,15 +23,15 @@ const ReportPage = () => {
   <MathJaxContext version={3} config={mathJaxConfig}>
     <div className="-z-1 absolute bg-linear-to-b from-transparent from-0% to-gray-50 to-2% w-full h-[calc(100%-var(--spacing)*60)] top-60 left-0"></div>
 
-    <div className="max-w-[900px] mx-auto mt-32 py-10 font-sans text-gray-800">
+    <div className="max-w-[900px] mx-auto mt-18 md:mt-32 py-10 px-4 font-sans text-gray-800">
       <header className="mb-10">
-        <h1 className="text-4xl font-bold mb-4">Sign Language Classification Report</h1>
-        <Text as="p" element="p" className="mb-1 font-medium">Authors: Dominik Schweigl, Emanuel Schöpf</Text>
+        <h1 className="text-xl md:text-4xl font-bold mb-2 md:mb-4">Sign Language Classification Report</h1>
+        <Text as="p" element="p" className="text-xs md:text-base mb-1 font-medium italic">Authors: Dominik Schweigl, Emanuel Schöpf</Text>
       </header>
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-2">I. Introduction</h2>
-        <Text as="p" element="p" >
+        <h2 className="text-lg md:text-2xl font-semibold mb-2">I. Introduction</h2>
+        <Text as="p" element="p">
           This project focuses on the classification of American Sign Language (ASL) hand gestures using machine learning models.
           The dataset consists of 9,680 grayscale images of hands, each sized at <Formula tex="128 \times 128" /> pixels.
           Each image represents a gesture corresponding to the digits 0-9 or the lowercase letters a-z,
@@ -49,14 +49,14 @@ const ReportPage = () => {
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold mb-2">II. Implementation / ML Process</h2>
+        <h2 className="text-lg md:text-2xl  font-semibold mb-2">II. Implementation / ML Process</h2>
 
         <Text as="p" element="p">
           The methods chosen for this task are a convolutional neural network (CNN), a multilabel support-vector machine (SVM) classifier, 
           as well as an autoencoder combined with a fully connected neural network.
         </Text>
 
-        <h3 className="text-xl font-semibold mt-4 mb-1">A. Data Preprocessing</h3>
+        <h3 className="text-base md:text-xl font-semibold mt-4 mb-1">A. Data Preprocessing</h3>
         <Text as="p" element="p">
           To avoid bias toward minority classes, incorrect class distributions, or misleading metrics, the dataset was balanced by augmenting 
           underrepresented classes using horizontal mirroring and <Formula tex="\pm 90^\circ" /> rotations as needed. 
@@ -76,7 +76,7 @@ const ReportPage = () => {
           retaining <Formula tex="90\%" /> of the variance.
         </Text>
 
-        <h3 className="text-xl font-semibold mt-4 mb-1">B. Classifier Architecture</h3>
+        <h3 className="text-base md:text-xl  font-semibold mt-4 mb-1">B. Classifier Architecture</h3>
 
         <Text as="p" element="p">
           A convolutional neural network (CNN) was chosen for this task due to its effectiveness in processing image data. 
@@ -121,7 +121,7 @@ const ReportPage = () => {
           was also omitted, as we expected the problem to be non-linear, which makes SVMs more suitable through kernel-based decision boundaries.
         </Text>
 
-        <h3 className="text-xl font-semibold mt-4 mb-1">C. Hyperparameters</h3>
+        <h3 className="text-base md:text-xl md:font-semibold mt-4 mb-1">C. Hyperparameters</h3>
         <Text as="p" element="p">
           Hyperparameter optimization was performed using random search. For each parameter, either a numerical interval <Formula tex="[a, b]" /> or
           a discrete set <Formula tex="\{c, d, e, \dots\}" /> was defined. Across 
@@ -150,7 +150,7 @@ const ReportPage = () => {
 
 
       <section className="mt-10 mb-10">
-        <h2 className="text-2xl font-semibold mb-2">III. Results</h2>
+        <h2 className="text-lg md:text-2xl  font-semibold mb-2">III. Results</h2>
 
         <Text as="p" element="p">
           The convolutional neural network (CNN) achieved the highest accuracy among all models, followed by the support vector machine (SVM) and autoencoder (AE). Final performance metrics on the training, validation, and test sets are summarized in the table below:
@@ -168,7 +168,7 @@ const ReportPage = () => {
       </section>
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-2">IV. Discussion</h2>
+        <h2 className="text-lg md:text-2xl  font-semibold mb-2">IV. Discussion</h2>
 
         <Text as="p" element="p">
           CNN performance was primarily improved through dataset balancing and augmentation. Early models failed to correctly classify certain underrepresented classes—such as the letter <code>W</code>—until augmentation addressed class imbalance. Model accuracy could potentially be enhanced further by reducing kernel sizes to capture finer spatial features, but was limited by a <Formula tex="50\,\text{MB}" /> model size constraint, with the final CNN occupying <Formula tex="49\,\text{MB}" />.
@@ -183,8 +183,8 @@ const ReportPage = () => {
         </Text>
       </section>
 
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-2">V. Conclusion</h2>
+      <section >
+        <h2 className="text-lg md:text-2xl font-semibold mb-2">V. Conclusion</h2>
 
         <Text as="p" element="p">
           The final CNN classifier was trained for <Formula tex="60" /> epochs on the entire training dataset and achieved a strong test dataset
