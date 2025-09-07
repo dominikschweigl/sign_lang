@@ -41,4 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 # dataset image samples
-*/test_dataset/images/*.jpg
+# */test_dataset/images/*.jpg
