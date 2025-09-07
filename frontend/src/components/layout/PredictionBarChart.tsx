@@ -2,7 +2,7 @@
 
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import type { Prediction } from "@/types/prediction";
 import React from "react";

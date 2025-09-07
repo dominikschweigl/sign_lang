@@ -9,8 +9,6 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { Card, CardContent } from "../ui/card";
 import ImagePreview from "./ImagePreview";
 
 interface ImageCarouselProps {
@@ -47,7 +45,7 @@ export default function ImageCarousel({ imageSrcs, initial, onChange, orientatio
       setHasScrolledInitially(true);
       onChange?.(initial, imageSrcs[initial])
     }
-  }, [api, hasScrolledInitially, initial]);
+  }, [api, hasScrolledInitially, initial, imageSrcs, onChange]);
 
   return (
     orientation === "vertical" ?
@@ -70,8 +68,8 @@ export default function ImageCarousel({ imageSrcs, initial, onChange, orientatio
       <CarouselNext />
     </Carousel>
     :
-    <Carousel className="w-full max-w-[calc(100%-60px)]" setApi={setApi} opts={{loop: true}} orientation="horizontal">
-      <CarouselContent className="max-w-full pl-4">
+    <Carousel className="w-full max-w-[calc(100%-60px)]" setApi={setApi} opts={{loop: true, align:"center"}} orientation="horizontal">
+      <CarouselContent className="max-w-full">
             {imageSrcs.map((src, index) => (
             <CarouselItem key={index} className="flex items-center justify-center">
               <div

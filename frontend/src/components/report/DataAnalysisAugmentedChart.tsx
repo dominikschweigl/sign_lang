@@ -95,7 +95,8 @@ export function DataAnalysisAugmentedChart() {
               content={
                 <ChartTooltipContent
                   hideLabel={false}
-                  formatter={(value, name) => `${value} samples`}
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                  formatter={(value, _) => `${value} samples`}
                 />
               }
             />

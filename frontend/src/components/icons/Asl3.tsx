@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Asl3({ strokeWidth, ...props }: React.SVGProps<SVGSVGElement>) {
+export default function Asl3({ ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 100 100" stroke="black" {...props}>
       <path

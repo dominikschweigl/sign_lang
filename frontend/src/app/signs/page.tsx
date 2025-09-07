@@ -62,7 +62,7 @@ const ASLInfoPage: React.FC = () => {
         <div className="relative z-10 text-center mb-12 md:mb-30">
           <h1 className="text-xl md:text-4xl font-bold mb-4">ASL Signs Reference</h1>
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            ASL is a visual language, using hand shapes and motions to communicate letters, numbers, and more. Below, you'll find 36 ASL signs (A-Z, 0-9). These are the signs that the model was trained to recognize.
+            ASL is a visual language, using hand shapes and motions to communicate letters, numbers, and more. Below, you&apos;ll find 36 ASL signs (A-Z, 0-9). These are the signs that the model was trained to recognize.
           </p>
         </div>
 

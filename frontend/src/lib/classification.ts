@@ -1,4 +1,4 @@
-import type { ASLLabel, Prediction } from "@/types/prediction";
+import type { Prediction } from "@/types/prediction";
 
 const BACKEND_URL: string = "http://localhost:5000/predict";
 

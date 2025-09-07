@@ -26,8 +26,19 @@ export default function Navigation() {
     setOpen(false)
   }, [pathname])
 
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10) // trigger when user scrolls 20px
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   return (
-    <header className="fixed w-full bg-white md:bg-transparent top-0 z-40 flex items-center gap-1 md:gap-2 p-4 pb-3 md:p-6 md:py-8">
+    <header className={`fixed w-full bg-white md:bg-linear-30 md:bg-white/70 md:backdrop-blur-md md:rounded-b-lg top-0 z-40 flex items-center gap-1 md:gap-2 p-4 pb-3 md:p-6 ${scrolled ? "md:pt-5 md:pb-4 md:border-b" : "md:py-8"} transition-all`}>
       <div className="relative">
         <Hand size={22} />
         <GitFork size={12} className="bg-white absolute -right-0.5 -bottom-0.5" />

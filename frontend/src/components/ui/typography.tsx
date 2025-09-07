@@ -32,7 +32,8 @@ type TextProps<T extends Element> = { element: T } & VariantProps<typeof textVar
 const Text = React.forwardRef<
   VariantProps<typeof textVariants> & React.HTMLAttributes<HTMLElement>,
   TextProps<Element>
->(({ className, element, as, ...props }, ref) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+>(({ className, element, as, ...props }, _) => {
   const Component = element;
 
   const componentProps = {
