@@ -57,11 +57,11 @@ const ASLInfoPage: React.FC = () => {
 <div className="-z-1 absolute bg-linear-to-b from-transparent from-0% to-gray-50 to-25% w-full h-[calc(100%-var(--spacing)*60)] top-60 left-0">
 </div>
 
-      <div className="container mx-auto py-10 px-4 mt-32 relative">
+      <div className="container mx-auto py-10 px-4 mt-18 md:mt-32 relative">
         {/* Header */}
-        <div className="relative z-10 text-center mb-30">
-          <h1 className="text-4xl font-bold mb-4">ASL Signs Reference</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <div className="relative z-10 text-center mb-12 md:mb-30">
+          <h1 className="text-xl md:text-4xl font-bold mb-4">ASL Signs Reference</h1>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
             ASL is a visual language, using hand shapes and motions to communicate letters, numbers, and more. Below, you'll find 36 ASL signs (A-Z, 0-9). These are the signs that the model was trained to recognize.
           </p>
         </div>
