@@ -6,7 +6,7 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    CORS(app)
+    CORS(app, origins=["https://sign-lang-beta.vercel.app"])
 
     from .routes import main
     app.register_blueprint(main)

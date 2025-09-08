@@ -1,6 +1,6 @@
 import type { Prediction } from "@/types/prediction";
 
-const BACKEND_URL: string = "http://localhost:5000/predict";
+const BACKEND_URL: string = "https://sign-lang-t9i9.onrender.com/predict";
 
 export async function classify(file: File): Promise<Prediction[]> {
   const formData = new FormData();
