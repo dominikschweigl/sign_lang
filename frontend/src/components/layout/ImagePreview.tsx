@@ -13,7 +13,8 @@ export default function ImagePreview({ imageSrc }: ImagePreviewProps) {
       src={imageSrc}
       alt="ML Input"
       fill
-      className="rounded-lg object-cover"
+      className="rounded-lg object-cover" 
+      sizes="(max-width: 640px) 12rem, (max-width: 1024px) 16rem, 22rem"
     />
   </div>
   );

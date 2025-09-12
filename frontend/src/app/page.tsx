@@ -5,7 +5,7 @@ import { PredictionBarChart } from "@/components/layout/PredictionBarChart";
 import PredictionCard from "@/components/layout/PredictionCard";
 import { Button } from "@/components/ui/button";
 import { classify } from "@/lib/classification";
-import { cn, loadPublicImageAsFile } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
 import { GitFork, Loader2 } from "lucide-react";
 import type { Prediction, ASLLabel } from "@/types/prediction";
@@ -30,7 +30,7 @@ export default function Home() {
     setIsClassifying(true)
     setChartData([])
     try {
-      const classification = await classify(await loadPublicImageAsFile(`${image}`));
+      const classification = await classify(image);
       setChartData(classification)
     } catch {
       setChartData([])
